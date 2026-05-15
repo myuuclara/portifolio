@@ -635,10 +635,14 @@ svg {
 }
 
 .titlemark {
-  width: 26px;
-  height: 26px;
-  border: 1px solid #D6D6D6;
+  display: block;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
+  background: transparent;
+  object-fit: cover;
 }
 
 .site-titlebar strong {
@@ -890,7 +894,7 @@ svg {
 }
 
 .window-titlebar.site-titlebar {
-  grid-template-columns: 28px minmax(0, 1fr) auto;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
   min-height: 48px;
   padding: 0 16px;
   border-bottom-color: #D6D6D6;
@@ -1088,6 +1092,45 @@ body.index-only .resume-shell {
 
 .panel.is-active {
   animation: panelIn 260ms ease both;
+}
+
+.panel-stepper {
+  position: absolute;
+  right: 0;
+  bottom: -56px;
+  z-index: 6;
+  display: flex;
+  margin: 0;
+}
+
+.next-panel-button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #342F35;
+  cursor: pointer;
+  place-items: center;
+  transition: transform 160ms ease, color 160ms ease;
+}
+
+.next-panel-button::after {
+  content: "\2192";
+  font-family: var(--font-accent);
+  font-size: 1.45rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.next-panel-button:hover,
+.next-panel-button:focus-visible {
+  background: transparent;
+  color: #1f1b22;
+  outline: 1px solid #342F35;
+  outline-offset: 4px;
+  transform: translateX(4px);
 }
 
 @keyframes panelIn {
@@ -1545,8 +1588,9 @@ h3 {
   align-self: end;
   margin-top: 48px;
   font-family: var(--font-main);
-  font-size: 2rem;
+  font-size: clamp(1.45rem, 2.2vw, 1.9rem);
   font-weight: 500;
+  line-height: 1.08;
 }
 
 .project-index {
@@ -2046,8 +2090,7 @@ body::after {
 }
 
 .titlemark {
-  border-color: rgba(255, 255, 255, 0.7);
-  background: var(--paper-strong);
+  background: transparent;
 }
 
 .hero {
@@ -2757,6 +2800,7 @@ body::after,
 
 .summary-panel {
   padding: clamp(20px, 3vw, 34px);
+  overflow: visible;
   background: transparent;
 }
 
@@ -2805,9 +2849,8 @@ body {
 }
 
 .titlemark {
-  border-color: #342F35;
-  background: var(--paper-strong);
-  object-fit: contain;
+  background: transparent;
+  object-fit: cover;
 }
 
 .hero,
@@ -3310,6 +3353,11 @@ body {
     min-height: 480px;
     padding: 20px;
     padding-bottom: 62px;
+  }
+
+  .panel-stepper {
+    right: 4px;
+    bottom: -52px;
   }
 
   .section-heading {

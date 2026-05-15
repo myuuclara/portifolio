@@ -10,6 +10,37 @@ const letterOpen = document.querySelector("[data-open-letter]");
 const tabOrder = tabs.map((tab) => tab.dataset.tab || tab.dataset.goTab);
 let activeTabId = "resumo";
 
+function getTabLabel(tabId) {
+  const tab = tabs.find((item) => (item.dataset.tab || item.dataset.goTab) === tabId);
+  return tab?.querySelector("strong")?.textContent?.trim() || tabId;
+}
+
+function createPanelSteppers() {
+  panels.forEach((panel) => {
+    const tabId = panel.id.replace("panel-", "");
+    const currentIndex = tabOrder.indexOf(tabId);
+
+    if (currentIndex === -1 || panel.querySelector(".panel-stepper")) {
+      return;
+    }
+
+    const nextTabId = tabOrder[(currentIndex + 1) % tabOrder.length];
+    const stepper = document.createElement("nav");
+    const button = document.createElement("button");
+
+    stepper.className = "panel-stepper";
+    stepper.setAttribute("aria-label", "Navegacao entre secoes");
+
+    button.className = "next-panel-button";
+    button.type = "button";
+    button.dataset.goTab = nextTabId;
+    button.setAttribute("aria-label", `Ir para ${getTabLabel(nextTabId)}`);
+
+    stepper.append(button);
+    panel.append(stepper);
+  });
+}
+
 function unlockResume(shouldAnimate = true) {
   if (!document.body.classList.contains("index-only")) {
     return;
@@ -152,6 +183,7 @@ if (window.location.hash) {
   history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
 }
 
+createPanelSteppers();
 activateTab("resumo", false, false);
 
 filters.forEach((filter) => {
